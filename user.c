@@ -4,8 +4,8 @@
 #include <windows.h>
 #include "user.h"
 
-struct User* add(struct User * head, char* Username) {
-	Sleep((rand() % 10 + 1) * 1000);
+struct User* add(struct User * head, char* Username) { //takes a new "head" for the linked list, linked list head is always prev head or NULL
+	Sleep((rand() % 10 + 1) * 1000); //wait... WHAT? WHY? HOW? WHAT THE HELL? NO! AAAAAAAAAARRRRRRGGGGGGGHHHHHHH
 
 	struct User* newHead = (struct User*)malloc(sizeof(struct User));
 	strcpy(newHead->Username, Username);
