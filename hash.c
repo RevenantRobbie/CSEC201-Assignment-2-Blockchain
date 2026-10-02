@@ -1,13 +1,36 @@
 #include "hash.h"
+#include "user.h"
 
-unsigned char* SSHA(const unsigned char* msg, size_t length) {
+unsigned char* SSHA(struct User* usr, size_t length) {
     unsigned char A, B, C, D, E; //Initial Seed Value
-    A = 56; //I don't think A-E are based on the msg... shouldn't this be A = msg->hash.hash0?
+    unsigned char* msg = (unsigned char*)usr; // creates msg by casting usr to unsigned char, but we still need usr to access the hash values
+    A = usr->hash.hash0; //I don't think A-E are based on the msg... shouldn't this be A = msg->hash.hash0?
+    B = usr->hash.hash1;
+    C = usr->hash.hash2;
+    D = usr->hash.hash3;
+    E = usr->hash.hash4;
+
+    for (int i = 0; i < length; i++) {
+        for (int round = 0; round < 8; round++) {
+            unsigned char g = (B & C) | (C & D);
+            unsigned char old_A = A;
+            unsigned char old_E = E;
+            A = (A >> 2) % 256;
+            B = (B >> 1) % 256;
+            E = (g + B + msg[i]);
+            D = (A ^ B) % 256;
+            C = (A + E) % 256;
+            A = old_E;
+            B = old_A;
+        }
+    }
+
+    /* old hashing algorithm(terrible)
+    A = 56;
     B = 99;
     C = 102;
-    D = 67;
+    D = 67; 
     E = 76;
-
     for (int i = 0; i < length; i++) {
         for (int round = 0; round < 8; round++) {
             unsigned char g = (B & C) | (C & D);
@@ -20,14 +43,20 @@ unsigned char* SSHA(const unsigned char* msg, size_t length) {
             A = E;
             B = old_A;
         }
-    }
+    }*/
 
     unsigned char* digest = (unsigned char*)malloc(DIGEST_SIZE * sizeof(unsigned char));
     digest[0] = A;
     digest[1] = B;
     digest[2] = C;
     digest[3] = D;
-    digest[4] = D;
+	digest[4] = E; //originally digest[4] = D;, should be digest[4] = E; 
+
+	printf("%s\n", usr->Username);
+	printf("User Hash: ");
+	printDigest(usr->hash);
+    printf("Calculated Digest: ");
+	printDigest((struct Digest) { digest[0], digest[1], digest[2], digest[3], digest[4] });
     return digest;
 }
 

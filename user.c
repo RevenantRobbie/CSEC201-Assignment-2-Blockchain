@@ -5,7 +5,7 @@
 #include "user.h"
 
 struct User* add(struct User * head, char* Username) { //takes a new "head" for the linked list, linked list head is always prev head or NULL
-	Sleep((rand() % 10 + 1) * 1000); //wait... WHAT? WHY? HOW? WHAT THE HELL? NO! AAAAAAAAAARRRRRRGGGGGGGHHHHHHH
+	// Sleep((rand() % 10 + 1) * 1000); //wait... WHAT? WHY? HOW? WHAT THE HELL? NO! AAAAAAAAAARRRRRRGGGGGGGHHHHHHH
 
 	struct User* newHead = (struct User*)malloc(sizeof(struct User));
 	strcpy(newHead->Username, Username);
@@ -63,12 +63,12 @@ void printUser(struct User* user) {
 
 
 void generateDigest(struct Digest* digest, struct User* User) {
-    unsigned char* result = SSHA((unsigned char*)User, STRUCT_SIZE);
-    digest->hash0 = result[5]; // Logical error: Calculating or storing a hash for the wrong node
-    digest->hash1 = result[6];
-    digest->hash2 = result[7];
-    digest->hash3 = result[8];
-    digest->hash4 = result[9];
+    unsigned char* result = SSHA((struct User*)User, STRUCT_SIZE);
+    digest->hash0 = result[0]; // Logical error: Calculating or storing a hash for the wrong node
+    digest->hash1 = result[1];
+    digest->hash2 = result[2];
+    digest->hash3 = result[3];
+    digest->hash4 = result[4];
 }
 void verify(struct User* curr) {
     int height = 2;
@@ -77,7 +77,7 @@ void verify(struct User* curr) {
 
     struct Block* prev = NULL;
     if (curr != NULL) {
-        prev = curr; // Logical error: Updating the wrong next pointer
+        prev = curr->next; // Logical error: Updating the wrong next pointer
     }
 
     printf("User 1, impossible to verify\n");
@@ -90,7 +90,7 @@ void verify(struct User* curr) {
 
         if (prev != NULL) {
             struct Digest prev_digest_computed;
-            generateDigest(&prev_digest_computed, curr); // Logical error: Comparing a block against the wrong previous or next block
+            generateDigest(&prev_digest_computed, prev); // Logical error: Comparing a block against the wrong previous or next block
 
             if (digest_equal(prev_digest_computed, curr->hash)) {
                 printf("User %d passed\n", height);

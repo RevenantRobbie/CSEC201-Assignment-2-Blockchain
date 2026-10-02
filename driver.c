@@ -12,4 +12,6 @@ int main(void) {
 	head = add(head, "sumita");
 	head = add(head, "james");
 	verify(head);
+	printf("-----------------------------------------------------------------------------------\n");
+	verify(head);
 }

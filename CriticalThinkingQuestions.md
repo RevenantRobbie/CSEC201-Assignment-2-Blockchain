@@ -31,4 +31,21 @@ haii!
 6. Ohhh kayyyyy
    As it currently stands, test one passes, test 2, 3, and 4 fail, and test 5 passes, which is pretty much the bare minimum for what this blockchain code should be a able to do
    Look to screenshot 2 for evidence. The hashes are technically valid, but the repitition of their values is not expected behavior
-1. 
+
+7. modifications made
+		Modified hash.c and hash.h extensively to fix the hashing algorithm and ensure that user values were actually being passed in instead of it using pregenerated values each time
+		also modified user.c to take the actually created hash values instead of setting them as 0 every time
+		also also fixed a wacky bug on user.c where it wasn't actually comparing the right hashes 
+		additionally, there was some print statements that were useful for testing that I missed on pt 6 that I actually added this time. It's in hash.c and it just prints the old hash and new hash next to each other for ease of debugging
+		Made the verification process run twice too to make sure that all hashes return the same value when given the same input. Since verification runs the hashing algorithm, running it twice with the same inputs should test that the hashes return the same outputs given the same inputs
+
+8. absolutely not. 
+   as you can see in line 27 where the old code is (but its commented out), the hashing algorithm does not work at all
+   in line 37, A is added by 2 instead of being bit shifted. Terrible since addition is reversible so its not good for hashing
+   in line 38, B is multiplied by 3 instead of being bit shifted. Also terrible for the same reasons as why A was terrible
+   in line 40, A + E is multiplied by 5 for no reason
+   The hashing algorithm also sets the new A to the calculated version of E (B + mst[i] + g) instead of the old E
+   also, in lines 28-32, A B C D and E are all static values, meaning the hash would be the same for every single block in the chain.
+   There are however, some things I do like
+		The modulo is a nice touch, keeps the unsigned characters within bounds, and is also irreversable which is good for hashing
+		Doing 8 rounds of hashing is also good since it makes it more secure.
