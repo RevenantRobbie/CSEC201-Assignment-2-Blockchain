@@ -1,7 +1,5 @@
 # CSEC201-Assignment-2-Blockchain
 
-haii!
-
 1. Core functions
 	1. The program should successfully be able to create hashes
 	2. The program should be able to create a unique hash for every unique input
