@@ -60,6 +60,69 @@ unsigned char* SSHA(struct User* usr, size_t length) {
     return digest;
 }
 
+//made by chatGPT
+unsigned char* SSHA2(struct User* usr, size_t length) {
+    if (usr == NULL)
+		return NULL;
+
+    /*
+    * Initial hash state
+    */
+	unsigned char A = usr->hash.hash0;
+	unsigned char B = usr->hash.hash1;
+	unsigned char C = usr->hash.hash2;
+	unsigned char D = usr->hash.hash3;
+	unsigned char E = usr->hash.hash4;
+
+    /*
+    * Treat the User structure itself as the message.
+    */
+	unsigned char* msg = (unsigned char*)usr;
+
+    for (size_t i = 0; i < length; i++) {
+        /*
+        * Compute the next state from the OLD values of A-E
+        * Using temporary vareiables is important because all five
+        * values are updated simultaneously in the diagram.
+        */
+        unsigned char newA = E;
+
+        unsigned char newB = A;
+
+		unsigned char newC = 
+            (unsigned char)((A >> 2) + E);
+
+        unsigned char newD = 
+            (unsigned char)((A >> 2) ^ (B >> 1));
+
+        unsigned char newE =
+            (unsigned char)(
+                (B >> 1)
+                + ((B & C) | (C & D))
+                + msg[i]
+            );
+
+        A = newA;
+		B = newB;
+		C = newC;
+		D = newD;
+		E = newE;
+    }
+
+	unsigned char* result = malloc(5 * sizeof(unsigned char));
+
+    if (result == NULL)
+        return NULL;
+
+	result[0] = A;
+	result[1] = B;
+	result[2] = C;
+	result[3] = D;
+	result[4] = E;
+
+	return result;
+}
+
 int digest_equal(struct Digest digest1, struct Digest digest2) {
     return ((digest1.hash0 == digest2.hash0) &&
         (digest1.hash1 == digest2.hash1) &&

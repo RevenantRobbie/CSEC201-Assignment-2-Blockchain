@@ -49,3 +49,15 @@ haii!
    There are however, some things I do like
 		The modulo is a nice touch, keeps the unsigned characters within bounds, and is also irreversable which is good for hashing
 		Doing 8 rounds of hashing is also good since it makes it more secure.
+
+9. surprisingly, it does seem to work correctly
+   The math looks sound and the hashes that are generated are unique for each unput and suitably rand
+   however, this is actually my second attempt.
+   for my first attempt, I used normal chatGPT, but I accidentially used 2 prompts, so I had to discard the attempt
+   additionally, normal chatGPT would not allow me to upload more than 1 picture to it per day, so I had to log onto my mom's chatGPT premium account to complete the assignment
+   The weird thing is, the normal chatGPT code provided had several of errors in the hashing algorithm, while the chatGPT premium account's code didn't. funny how that works out...
+   unfortunately I can't show you since I discarded the normal chatGPT code because it didn't follow the assignment instructions
+   
+   The code works well with the base
+   It also differs from the original SSHA code since it creates new variables of A-E to store the new hashes
+   While SSHA stores the old values first then uses them to modify values A-E
