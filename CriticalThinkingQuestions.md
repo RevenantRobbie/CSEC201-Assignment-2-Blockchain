@@ -25,8 +25,10 @@ haii!
 
 5. I might need some code to print out the user's Digest at certain critical moments 
    Additionally, I need to add a custom user who or chain of users who are identical to the users in blockchain 1 to test that the generated hashes are consistent
-   
-6. Didn't actually need any new code to be written, since the code already prints the digests for me which I can use to debug fine
+   Didn't actually need any new code to be written, since the code already prints the digests for me which I can use to debug fine
    also, I can just run the code twice and try to get the same output to test a chain of identical users
 
-7. 
+6. Ohhh kayyyyy
+   As it currently stands, test one passes, test 2, 3, and 4 fail, and test 5 passes, which is pretty much the bare minimum for what this blockchain code should be a able to do
+   Look to screenshot 2 for evidence. The hashes are technically valid, but the repitition of their values is not expected behavior
+1. 
